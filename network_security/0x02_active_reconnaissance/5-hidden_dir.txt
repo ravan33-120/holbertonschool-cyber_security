@@ -1,1 +1,1 @@
-http://active.hbtn/admin_panel
+/admin_panel
