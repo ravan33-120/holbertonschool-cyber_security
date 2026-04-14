@@ -1,3 +1,11 @@
 #!/bin/bash
-grep -oP '(?<=sshd\[)\d+' /var/log/auth.log 2>/dev/null || \
-awk '{print $6}' /var/log/auth.log | sort | uniq -c | sort -rn
+
+LOG_FILE="auth.log"
+if [ ! -f "$LOG_FILE" ]; then
+    echo "Log file not found!"
+    exit 1
+fi
+grep "pam_unix" "$LOG_FILE" | \
+    grep -oP 'pam_unix\(\K[^:]+' | \
+    sort | uniq -c | sort -nr | \
+    head -n 1 | awk '{print $2}'
