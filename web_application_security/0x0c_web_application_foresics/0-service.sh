@@ -1,2 +1,2 @@
 #!/bin/bash
-grep -i -E 'ssh|ftp|httpd|nginx' auth.log |awk '{print $6}' |sort | uniq -c | sort -nr
+grep "pam_unix" "auth.log" | sed -E 's/.*pam_unix\(([^)]+)\).*/\1/' | cut -d ':' -f1 | sort | uniq -c | sort -nr
